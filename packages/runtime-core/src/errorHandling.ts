@@ -4,6 +4,34 @@ import { popWarningContext, pushWarningContext, warn } from './warning'
 import { isFunction, isPromise } from '@vue/shared'
 import { LifecycleHooks } from './enums'
 
+/** 错误处理模块
+ * 对于用户的函数，vue3提供了两个函数，callWithErrorHandling和callWithAsyncErrorHandling
+ * 两个函数的作用是一样的，都是调用用户的函数，但是callWithAsyncErrorHandling会对promise进行处理
+ * 两个函数的参数都是用户的函数，组件实例，错误类型，参数
+ * 两个函数的返回值都是用户函数的返回值
+ *
+ * 比如
+ * // utils.js
+ * let handleError = null
+ * export default {
+ *   foo(fn) {
+ *     callWithErrorHandling(fn)
+ *   },
+ *   // 用户可以调用该函数注册统一的错误处理函数
+ *   registerErrorHandler(fn) {
+ *     handleError = fn
+ *   }
+ * }
+ * function callWithErrorHandling(fn) {
+ *   try {
+ *     fn && fn()
+ *   } catch (e) {
+ *     // 将捕获到的错误传递给用户的错误处理程序
+ *     handleError(e)
+ *   }
+ * }
+ * */
+
 // contexts where user provided function may be executed, in addition to
 // lifecycle hooks.
 export enum ErrorCodes {

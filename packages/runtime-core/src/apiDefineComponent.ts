@@ -1,3 +1,4 @@
+/** 这些代码主要在为类型支持服务（主要是一些关于TS的）*/
 import type {
   ComponentInjectOptions,
   ComponentOptions,
